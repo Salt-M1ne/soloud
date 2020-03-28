@@ -123,6 +123,7 @@ namespace SoLoud
 		mChannels = 1;
 		mFile = 0;
 		mFileOwned = false;
+		mModel = 0;
 	}
 
 	TedSid::~TedSid()
@@ -132,7 +133,7 @@ namespace SoLoud
 			delete mFile;
 	}
 
-	result TedSid::loadMem(unsigned char *aMem, unsigned int aLength, bool aCopy, bool aTakeOwnership)
+	result TedSid::loadMem(const unsigned char *aMem, unsigned int aLength, bool aCopy, bool aTakeOwnership)
 	{
 		if (!aMem || aLength == 0)
 			return INVALID_PARAMETER;

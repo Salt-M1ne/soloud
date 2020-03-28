@@ -1,6 +1,6 @@
 /*
 SoLoud audio engine
-Copyright (c) 2013-2014 Jari Komppa
+Copyright (c) 2013-2020 Jari Komppa
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -78,9 +78,18 @@ namespace SoLoud
 
 		// Get approximate volume for output channel for visualization. Visualization has to be enabled before use.
 		float getApproximateVolume(unsigned int aChannel);
+
+		// Get number of immediate child voices to this bus
+		unsigned int getActiveVoiceCount();
+
+		// Get current the resampler for this bus
+		unsigned int getResampler();
+		// Set the resampler for this bus
+		void setResampler(unsigned int aResampler);
 	public:
 		BusInstance *mInstance;
 		unsigned int mChannelHandle;
+		unsigned int mResampler;
 		// FFT output data
 		float mFFTData[256];
 		// Snapshot of wave data for visualization

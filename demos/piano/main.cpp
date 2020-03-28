@@ -73,7 +73,7 @@ RtMidiIn *midi = NULL;
 void plonk(float rel, float vol = 0x50)
 {
 	int i = 0;
-	while (gPlonked[i].mHandle != 0 && i < 128) i++;
+	while (i < 128 && gPlonked[i].mHandle != 0) i++;
 	if (i == 128) return;
 
 	vol = (vol + 10) / (float)(0x7f + 10);
@@ -102,7 +102,7 @@ void plonk(float rel, float vol = 0x50)
 void unplonk(float rel)
 {
 	int i = 0;
-	while (gPlonked[i].mRel != rel &&i < 128) i++;
+	while (i < 128 && gPlonked[i].mRel != rel) i++;
 	if (i == 128) return;
 	gSoloud.fadeVolume(gPlonked[i].mHandle, 0, gRelease);
 	gSoloud.scheduleStop(gPlonked[i].mHandle, gRelease);
@@ -112,7 +112,7 @@ void unplonk(float rel)
 void replonk(float vol = 0x50)
 {
 	int i = 0;
-	while (gPlonked[i].mHandle != 0 && i < 128) i++;
+	while (i < 128 && gPlonked[i].mHandle != 0) i++;
 	if (i == 128) return;
 
 	vol = (vol + 10) / (float)(0x7f + 10);
@@ -342,21 +342,21 @@ void DemoMainloop()
 		if (ImGui::RadioButton("Lowpass", gFilterSelect == 1))
 		{
 			gFilterSelect = 1;
-			gBQRFilter.setParams(SoLoud::BiquadResonantFilter::LOWPASS, 44100, 1000, 2);
+			gBQRFilter.setParams(SoLoud::BiquadResonantFilter::LOWPASS, 1000, 2);
 			gBus.setFilter(2, &gBQRFilter);
 			say("Low pass filter");
 		}
 		if (ImGui::RadioButton("Highpass", gFilterSelect == 2))
 		{
 			gFilterSelect = 2;
-			gBQRFilter.setParams(SoLoud::BiquadResonantFilter::HIGHPASS, 44100, 1000, 2);
+			gBQRFilter.setParams(SoLoud::BiquadResonantFilter::HIGHPASS, 1000, 2);
 			gBus.setFilter(2, &gBQRFilter);
 			say("High pass filter");
 		}
 		if (ImGui::RadioButton("Bandpass", gFilterSelect == 3))
 		{
 			gFilterSelect = 3;
-			gBQRFilter.setParams(SoLoud::BiquadResonantFilter::BANDPASS, 44100, 1000, 2);
+			gBQRFilter.setParams(SoLoud::BiquadResonantFilter::BANDPASS, 1000, 2);
 			gBus.setFilter(2, &gBQRFilter);
 			say("Band pass filter");
 		}

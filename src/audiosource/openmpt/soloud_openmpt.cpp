@@ -81,7 +81,7 @@ namespace SoLoud
 		mModfile = 0;
 	}
 
-	result Openmpt::loadMem(unsigned char *aMem, unsigned int aLength, bool aCopy, bool aTakeOwnership)
+	result Openmpt::loadMem(const unsigned char *aMem, unsigned int aLength, bool aCopy, bool aTakeOwnership)
 	{
 		MemoryFile mf;
 		int res = mf.openMem(aMem, aLength, aCopy, aTakeOwnership);
@@ -120,6 +120,7 @@ namespace SoLoud
 		if (!mpf)
 		{
 			delete[] mData;
+			mData = 0;
 			mDataLen = 0;
 			return FILE_LOAD_FAILED;
 		}
@@ -138,8 +139,11 @@ namespace SoLoud
 	Openmpt::~Openmpt()
 	{
 		stop();
-		delete[] mData;
-		mData = 0;
+		if (mData)
+		{
+			delete[] mData;
+			mData = 0;
+		}
 		mDataLen = 0;
 	}
 
